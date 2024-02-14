@@ -87,6 +87,7 @@ BEGIN CheckForBingo()
 
     #check the result of each column
     FOR col = 1 TO 5
+        result = ""
         For row = 1 TO 5
             result = result + Grid(row, col)
         NEXT row
@@ -98,6 +99,7 @@ BEGIN CheckForBingo()
     #check the result of each row
     result = ""
     FOR row = 1 TO 5
+        result = ""
         For col = 1 TO 5
             result = result + Grid(row, col)
         NEXT row
