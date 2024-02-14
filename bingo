@@ -1,0 +1,224 @@
+#set up 2D array that stores the bingo grid
+
+DIM Grid(5,5) As Integer
+Dim Flags(100) As Integer
+DIM Results(5,5) As Integer
+
+#populate each cell with a random number between 1-99
+
+BEGIN Mainprogram
+    BuildGrid()
+    PrintGrid()
+    ClearFlags() #reset array so that we can play bingo
+    Play()
+END
+
+BEGIN PrintGrid()
+    #This subroutine should print the grid
+    #in a table format like so
+      ---- ---- ---- ---- ----
+     | 15 | 26 | 38 | 59 | 68 |
+      ---- ---- ---- ---- ----
+     | 13 | 20 | 42 | 53 | 62 |
+      ---- ---- ---- ---- ----
+     |  8 | 19 | 31 | 60 | 71 |
+      ---- ---- ---- ---- ----
+     |  1 | 28 | 33 | 55 | 70 |
+      ---- ---- ---- ---- ----
+     | 12 | 24 | 41 | 51 | 65 |
+      ---- ---- ---- ---- ----
+
+    #PRINT ROW by row
+    vals = ""
+    For row = 1 TO 5
+        FOR col = 1 TO 5
+            vals = vals + "|" + Grid(row, col)
+        NEXT
+        Print vals #prints on a new line
+   NEXT row
+
+END
+
+BEGIN BuildGrid()
+    val = ""
+    For row = 1 TO 5
+        For col = 1 TO 5
+            val = GetUnique()
+            IF GetUnique < 10 THEN
+                Grid(row, col) = " " + STRING(val)
+            ELSE
+                Grid(row, col) = STRING(val)
+            ENDIF
+        Next col
+    Next row
+END BuildGrid
+
+
+BEGIN GetUnique()
+    REPEAT
+        num = Random(98) + 1
+    UNTIL Flags(num) = 0
+    Flags(num) = 1
+    Return num
+END CheckUnique
+
+BEGIN ClearFlags()
+    For i = 1 to Num items in Flags
+        Flags(i) = 0
+    Next i
+END
+
+BEGIN Play()
+    win = False
+    WHILE not win
+        num = GetUnique()
+        PrintGrid()
+        win = CheckForBingo()
+    ENDWHILE
+    print("You're a winner!")
+
+END
+
+BEGIN CheckForBingo()
+    #go through and check if there
+    #is a row, column or diagonal
+    #that has numbers selected
+    result = ""
+
+    #check the result of each column
+    FOR col = 1 TO 5
+        For row = 1 TO 5
+            result = result + Grid(row, col)
+        NEXT row
+        IF result == "XXXXX" THEN
+            return True
+        ENDIF
+    NEXT col
+
+    #check the result of each row
+    result = ""
+    FOR row = 1 TO 5
+        For col = 1 TO 5
+            result = result + Grid(row, col)
+        NEXT row
+        IF result == "XXXXX" THEN
+            return True
+        ENDIF
+    NEXT col
+
+    #check diagonal top left
+    result = ""
+    FOR col = 1 TO 5
+        result = result + Grid(col, col)
+    NEXT
+    IF result == "XXXXX" THEN
+        return True
+    ENDIF
+
+    #check diagonal top right
+    result = ""
+    FOR col = 5 TO 1 step -1
+        result = result + Grid(col, 6-col)
+    NEXT
+
+    IF result == "XXXXX" THEN
+        return True
+    ENDIF
+    return False
+
+END Checkforbingo
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
